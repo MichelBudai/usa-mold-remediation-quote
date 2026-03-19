@@ -1,0 +1,20 @@
+export const moldRemediationConfig = {
+  name: "Mold Remediation",
+  namePlural: "Mold Remediation Companies",
+  slug: "mold-remediation",
+  siteUrl: "https://usa-mold-remediation-quote.com",
+  siteName: "USA Mold Remediation Quote",
+  phoneTel: "tel:+18556653653",
+  phoneDisplay: "(855) 665-3653",
+  ga4Id: "",
+  services: [
+    { slug: "mold-remediation-quote",    label: "Mold Remediation Quote" },
+    { slug: "mold-inspection-quote",     label: "Free Mold Inspection" },
+    { slug: "mold-testing-quote",        label: "Mold Testing Quote" },
+    { slug: "black-mold-removal-quote",  label: "Black Mold Removal Quote" },
+    { slug: "attic-mold-removal-quote",  label: "Attic Mold Removal Quote" },
+    { slug: "crawl-space-mold-quote",    label: "Crawl Space Mold Quote" },
+    { slug: "mold-damage-repair-quote",  label: "Mold Damage Repair Quote" },
+    { slug: "emergency-mold-removal",    label: "Emergency Mold Removal" },
+  ],
+} as const;
