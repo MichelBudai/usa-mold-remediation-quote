@@ -1,31 +1,58 @@
-name: Deploy mold-remediation static site
+name: Deploy static site (mold-remediation)
+
 on:
   push:
     branches:
       - main
   workflow_dispatch: {}
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - run: npm ci
-      - run: npx next build
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Clean build dirs
+        run: rm -rf .next out
+
+      - name: Build (Next export)
         env:
           SITE_SLUG: mold-remediation
+        run: npx next build
+
       - name: Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
         run: |
-          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          if [ -z "${SSH_PRIVATE_KEY}" ]; then
+            echo "Missing GitHub Secret: VPS_SSH_PRIVATE_KEY."
+            exit 1
+          fi
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
           printf "%s\n" "${SSH_PRIVATE_KEY}" | tr -d '\r' > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
-      - run: test -d ./out && ls -la ./out | head
-      - run: ssh "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" "mkdir -p /var/www/mold-remediation-static"
-      - run: rsync -az --delete ./out/ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/mold-remediation-static/"
-      - run: ssh "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" "nginx -t && systemctl reload nginx"
+
+      - name: Ensure remote dir exists
+        run: |
+          ssh -o StrictHostKeyChecking=yes "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" "mkdir -p '/var/www/mold-remediation-static'"
+
+      - name: Upload out/ via rsync
+        run: |
+          rsync -az --delete ./out/ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/mold-remediation-static/"
+
+      - name: Reload nginx
+        run: |
+          ssh "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" "nginx -t && systemctl reload nginx"
