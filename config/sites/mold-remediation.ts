@@ -4,8 +4,8 @@ export const moldRemediationConfig = {
   slug: "mold-remediation",
   siteUrl: "https://usa-mold-remediation-quote.com",
   siteName: "USA Mold Remediation Quote",
-  phoneTel: "tel:+18556653653",
-  phoneDisplay: "(855) 665-3653",
+  phoneTel: "tel:+18335676029",
+  phoneDisplay: "(833) 567-6029",
   ga4Id: "G-PY5Y10NSQ0",
   services: [
     { slug: "mold-remediation-quote",    label: "Mold Remediation Quote" },
