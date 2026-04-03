@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -22,5 +26,5 @@ jobs:
           VPS_PASSWORD: ${{ secrets.VPS_PASSWORD }}
         run: |
           sudo apt-get install -y sshpass
-          sshpass -p "${VPS_PASSWORD}" rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" ./out/ root@187.124.147.244:/var/www/mold-remediation-static/
-          sshpass -p "${VPS_PASSWORD}" ssh -o StrictHostKeyChecking=no root@187.124.147.244 "nginx -t && systemctl reload nginx"
+          sshpass -p "${VPS_PASSWORD}" rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" ./out/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/mold-remediation-static/
+          sshpass -p "${VPS_PASSWORD}" ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "nginx -t && systemctl reload nginx"
