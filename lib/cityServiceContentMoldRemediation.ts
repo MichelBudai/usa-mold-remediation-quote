@@ -53,6 +53,8 @@ export function getMoldRemediationQuoteCityPageContent(
   nearby1: string, nearby2: string, nearby3: string,
   phone = PHONE, m?: CityMetadata | null
 ): ServiceCityContent {
+  const homeownershipRate = m?.homeownershipRate;
+  const totalHousingUnits = m?.totalHousingUnits;
   return {
     meta: {
       title: `Mold Remediation in ${cityName}, ${stateAbbr} | Free Quote | IICRC S520 Certified`,
@@ -83,6 +85,7 @@ export function getMoldRemediationQuoteCityPageContent(
       localParagraphs: [
         m?.county ? `In ${m.county}, IICRC-certified mold contractors are familiar with local building permit requirements for mold-related repairs.` : "",
         m?.medianYearBuilt ? `Many ${cityName} homes built around ${m.medianYearBuilt} have construction characteristics that create higher mold risk — less vapor barrier protection, older plumbing, and ventilation systems that may not meet current standards.` : "",
+        homeownershipRate ? `With a homeownership rate of ${homeownershipRate}% in ${cityName}, mold remediation is a common owner-driven priority — homeowners who plan to stay long-term or sell understand that a certified clearance report is essential for both health and property value.` : "",
       ].filter(Boolean) as string[],
       cost: `Mold remediation in ${cityName}: $500 – $30,000+ (insurance usually covers sudden damage)`,
       whatAffects: ["Affected square footage and number of rooms", "Mold species — common vs. Stachybotrys (black mold)", "Materials affected — drywall, insulation, framing, flooring", "Source of moisture — must be corrected to prevent recurrence"],
@@ -104,6 +107,7 @@ export function getMoldRemediationQuoteCityPageContent(
         "Post-remediation clearance testing included",
         "Insurance documentation from day one",
         `Serving ${cityName} and surrounding ${stateAbbr} areas`,
+        ...(totalHousingUnits ? [`${cityName} has ${totalHousingUnits.toLocaleString()} housing units — local mold remediation specialists are experienced with the construction types and moisture patterns common across this market.`] : []),
       ], m),
     },
     eeat: { title: "Why trust this guide", bullets: EEAT },
@@ -133,6 +137,8 @@ export function getMoldInspectionQuoteCityPageContent(
   nearby1: string, nearby2: string, nearby3: string,
   phone = PHONE, m?: CityMetadata | null
 ): ServiceCityContent {
+  const medianHouseholdIncome = m?.medianHouseholdIncome;
+  const medianGrossRent = m?.medianGrossRent;
   return {
     meta: {
       title: `Free Mold Inspection in ${cityName}, ${stateAbbr} | Air Quality Testing | IICRC`,
@@ -162,6 +168,7 @@ export function getMoldInspectionQuoteCityPageContent(
       description: `A professional mold inspection in ${cityName} covers: visual assessment for visible mold and water staining, moisture mapping with calibrated meters to find elevated moisture behind walls and under floors, thermal imaging to detect hidden moisture, air quality sampling (spore trap samples sent to accredited lab), and a written report documenting findings, moisture readings, and recommended actions. An IICRC S520-certified inspector follows the same protocol accepted by insurance companies, real estate lenders, and courts.`,
       localParagraphs: [
         m?.county ? `In ${m.county}, mold inspection reports are commonly required for real estate transactions and insurance claims.` : "",
+        medianGrossRent ? `In ${cityName}, where median rent is $${medianGrossRent.toLocaleString()}/month, rental property owners increasingly schedule pre-lease mold inspections — a clean inspection report reduces liability exposure and protects against habitability complaints.` : "",
       ].filter(Boolean) as string[],
       cost: "FREE visual inspection — lab testing $200–$400",
       whatAffects: ["Whether air quality lab testing is required", "Number of rooms and areas to inspect", "Access to wall cavities, attic, and crawl space", "Report format needed — insurance, real estate, or personal"],
@@ -184,7 +191,7 @@ export function getMoldInspectionQuoteCityPageContent(
     faq: {
       h2: `Mold Inspection FAQ — ${cityName}`,
       items: [
-        { q: `Is the mold inspection really free in ${cityName}?`, a: `Yes. A visual inspection and moisture assessment from an IICRC-certified contractor is free with no obligation. Air quality lab testing adds $200–$400 when needed.` },
+        { q: `Is the mold inspection really free in ${cityName}?`, a: `Yes. A visual inspection and moisture assessment from an IICRC-certified contractor is free with no obligation. Air quality lab testing adds $200–$400 when needed.${medianHouseholdIncome ? ` In ${cityName}, where median household income is $${Number(medianHouseholdIncome).toLocaleString()}, most homeowners budget for lab testing when purchasing or selling a home as part of standard due diligence.` : ""}` },
         { q: `What does a mold inspection include in ${cityName}?`, a: `Visual assessment, moisture mapping, thermal imaging, optional air quality sampling, and a written report with photos and recommendations.` },
         { q: `How long does a mold inspection take in ${cityName}?`, a: `1–3 hours for a residential inspection. Lab results from air quality samples take 2–5 business days.` },
         { q: `Can mold hide inside walls without being visible in ${cityName}?`, a: `Yes. Mold grows inside wall cavities, under flooring, and in insulation where it is invisible from the surface. Moisture meters and thermal imaging find it.` },
@@ -206,6 +213,8 @@ export function getMoldTestingQuoteCityPageContent(
   nearby1: string, nearby2: string, nearby3: string,
   phone = PHONE, m?: CityMetadata | null
 ): ServiceCityContent {
+  const homeownershipRate = m?.homeownershipRate;
+  const totalHousingUnits = m?.totalHousingUnits;
   return {
     meta: {
       title: `Mold Testing in ${cityName}, ${stateAbbr} | Air Sampling & Lab Analysis | IICRC`,
@@ -241,7 +250,7 @@ export function getMoldTestingQuoteCityPageContent(
     whyCall: {
       h2: `When Mold Testing Is Required in ${cityName}`,
       paragraphs: [
-        `Real estate transactions. Buyers in ${cityName} increasingly require mold testing before closing. A clean mold test report protects sellers from post-sale liability and gives buyers confidence.`,
+        `Real estate transactions. Buyers in ${cityName} increasingly require mold testing before closing. A clean mold test report protects sellers from post-sale liability and gives buyers confidence.${homeownershipRate ? ` With a ${homeownershipRate}% homeownership rate in ${cityName}, local mold testing contractors are experienced with owner-occupant transactions and understand the documentation standards that satisfy both buyers and lenders.` : ""}`,
         `Insurance claims. Insurance companies require certified lab results to document mold contamination levels before approving remediation claims.`,
         `After remediation. Post-remediation clearance testing is required by IICRC S520 protocol — confirming that spore counts have returned to acceptable levels before the contractor is paid in full.`,
       ],
@@ -249,7 +258,7 @@ export function getMoldTestingQuoteCityPageContent(
     localSignals: {
       h2: `Mold Testing Service Areas Near ${cityName}`,
       intro: `IICRC-certified mold testing contractors in ${cityName} and nearby ${nearby1}, ${nearby2}, and ${nearby3}.`,
-      bullets: sigs(stateName, cityName, [`Accredited laboratory analysis`, "Air quality, surface, and bulk sampling available", "Insurance and real estate report formats", `Results in 2–5 business days`], m),
+      bullets: sigs(stateName, cityName, [`Accredited laboratory analysis`, "Air quality, surface, and bulk sampling available", "Insurance and real estate report formats", `Results in 2–5 business days`, ...(totalHousingUnits ? [`${cityName} has ${totalHousingUnits.toLocaleString()} housing units — local mold testing specialists regularly serve this market for pre-purchase, insurance, and post-remediation clearance testing.`] : [])], m),
     },
     eeat: { title: "Why trust this guide", bullets: EEAT },
     faq: {
@@ -277,6 +286,8 @@ export function getBlackMoldRemovalQuoteCityPageContent(
   nearby1: string, nearby2: string, nearby3: string,
   phone = PHONE, m?: CityMetadata | null
 ): ServiceCityContent {
+  const medianHouseholdIncome = m?.medianHouseholdIncome;
+  const medianGrossRent = m?.medianGrossRent;
   return {
     meta: {
       title: `Black Mold Removal in ${cityName}, ${stateAbbr} | IICRC S520 | Free Quote`,
@@ -304,7 +315,9 @@ export function getBlackMoldRemovalQuoteCityPageContent(
     mainService: {
       h2: `Black Mold Removal in ${cityName}, ${stateAbbr} — Why It Requires Professionals`,
       description: `Black mold removal in ${cityName} must follow strict IICRC S520 containment protocol. Stachybotrys produces mycotoxins that can cause serious respiratory illness, neurological symptoms, and immune suppression. Disturbing black mold without proper containment releases spores and mycotoxins into the air — spreading contamination throughout your home. Licensed ${cityName} contractors set up negative air pressure containment chambers, use Level C/D PPE, remove all affected materials, treat structural surfaces with antimicrobials, and perform post-remediation clearance testing before removing containment.`,
-      localParagraphs: [],
+      localParagraphs: [
+        medianHouseholdIncome ? `With a median household income of $${Number(medianHouseholdIncome).toLocaleString()} in ${cityName}, homeowners typically approach black mold removal as an urgent health priority — a licensed IICRC specialist ensures the remediation is done correctly the first time, with full insurance documentation to protect your investment.` : "",
+      ].filter(Boolean) as string[],
       cost: `Black mold removal in ${cityName}: $1,500 – $15,000+ (insurance usually applies)`,
       whatAffects: ["Extent of Stachybotrys growth", "Materials affected — drywall, insulation, framing", "Source of moisture that caused growth", "Whether HVAC system was contaminated"],
       cta: `Get a Black Mold Removal Quote in ${cityName} — Call Now`,
@@ -313,7 +326,7 @@ export function getBlackMoldRemovalQuoteCityPageContent(
       h2: `Why Black Mold Removal Must Be Professional`,
       paragraphs: [
         `Mycotoxin exposure is serious. Stachybotrys produces trichothecene mycotoxins linked to respiratory illness, neurological effects, and immunosuppression. Children, elderly, and immunocompromised individuals face the greatest risk.`,
-        `DIY black mold removal spreads contamination. Without proper containment, removing black mold releases billions of spores into your home's air — turning a contained problem into a whole-house contamination.`,
+        `DIY black mold removal spreads contamination. Without proper containment, removing black mold releases billions of spores into your home's air — turning a contained problem into a whole-house contamination costing $8,000–$30,000+ to remediate.${medianGrossRent ? ` In ${cityName}, where median rent is $${medianGrossRent.toLocaleString()}/month, rental property owners especially need professionally documented black mold removal — untreated or improperly documented mold is one of the most common habitability violations that result in tenant lawsuits.` : ""}`,
         `Insurance requires professional documentation. Black mold remediation claims require IICRC S520 documentation, air quality testing before and after, and a clearance certificate. DIY removal voids your claim.`,
       ],
     },
@@ -348,6 +361,8 @@ export function getAtticMoldRemovalQuoteCityPageContent(
   nearby1: string, nearby2: string, nearby3: string,
   phone = PHONE, m?: CityMetadata | null
 ): ServiceCityContent {
+  const homeownershipRate = m?.homeownershipRate;
+  const totalHousingUnits = m?.totalHousingUnits;
   return {
     meta: {
       title: `Attic Mold Removal in ${cityName}, ${stateAbbr} | Free Quote | IICRC Certified`,
@@ -375,7 +390,10 @@ export function getAtticMoldRemovalQuoteCityPageContent(
     mainService: {
       h2: `Attic Mold Removal in ${cityName}, ${stateAbbr}`,
       description: `Attic mold removal in ${cityName} includes: containment setup, HEPA vacuuming of all contaminated surfaces (rafters, sheathing, insulation), removal of contaminated insulation, antimicrobial treatment of structural wood, replacement of severely contaminated sheathing if needed, new insulation installation, and ventilation correction (adding soffit vents, ridge vents, or rerouting exhaust fans). Post-remediation clearance testing confirms the work is complete. Without correcting the ventilation or moisture source, mold will return.`,
-      localParagraphs: [m?.medianYearBuilt ? `Many ${cityName} homes built around ${m.medianYearBuilt} have attic ventilation that doesn't meet current building codes — a common cause of attic mold.` : ""].filter(Boolean) as string[],
+      localParagraphs: [
+        m?.medianYearBuilt ? `Many ${cityName} homes built around ${m.medianYearBuilt} have attic ventilation that doesn't meet current building codes — a common cause of attic mold.` : "",
+        homeownershipRate ? `With a homeownership rate of ${homeownershipRate}% in ${cityName}, attic mold removal is a priority for owner-occupants planning to sell — buyers and home inspectors routinely flag attic mold, and a certified clearance report is the fastest way to remove it as a transaction obstacle.` : "",
+      ].filter(Boolean) as string[],
       cost: `Attic mold removal in ${cityName}: $1,000 – $10,000+`,
       whatAffects: ["Extent of contamination — rafters vs. sheathing vs. insulation", "Whether sheathing replacement is needed", "Ventilation correction required", "Attic accessibility"],
       cta: `Get an Attic Mold Removal Quote in ${cityName} — Call Now`,
@@ -391,7 +409,7 @@ export function getAtticMoldRemovalQuoteCityPageContent(
     localSignals: {
       h2: `Attic Mold Removal Service Areas Near ${cityName}`,
       intro: `IICRC-certified attic mold removal contractors in ${cityName} and nearby ${nearby1}, ${nearby2}, and ${nearby3}.`,
-      bullets: sigs(stateName, cityName, [`IICRC S520-certified attic mold removal`, "Source correction — ventilation and exhaust routing", "New insulation installation included when needed", `Clearance testing included`], m),
+      bullets: sigs(stateName, cityName, [`IICRC S520-certified attic mold removal`, "Source correction — ventilation and exhaust routing", "New insulation installation included when needed", `Clearance testing included`, ...(totalHousingUnits ? [`${cityName} has ${totalHousingUnits.toLocaleString()} housing units — local attic mold specialists regularly serve this market, experienced with the roof and ventilation configurations common here.`] : [])], m),
     },
     eeat: { title: "Why trust this guide", bullets: EEAT },
     faq: {
@@ -419,6 +437,8 @@ export function getCrawlSpaceMoldQuoteCityPageContent(
   nearby1: string, nearby2: string, nearby3: string,
   phone = PHONE, m?: CityMetadata | null
 ): ServiceCityContent {
+  const homeownershipRate = m?.homeownershipRate;
+  const medianHouseholdIncome = m?.medianHouseholdIncome;
   return {
     meta: {
       title: `Crawl Space Mold Removal in ${cityName}, ${stateAbbr} | Free Quote | IICRC`,
@@ -454,7 +474,7 @@ export function getCrawlSpaceMoldQuoteCityPageContent(
     whyCall: {
       h2: `Why Crawl Space Mold Affects Your Whole Home in ${cityName}`,
       paragraphs: [
-        `Stack effect pulls crawl space air into living spaces. Up to 50% of the air in the first floor of a home comes from the crawl space. Crawl space mold directly affects the air quality of every room above.`,
+        `Stack effect pulls crawl space air into living spaces. Up to 50% of the air in the first floor of a home comes from the crawl space. Crawl space mold directly affects the air quality of every room above.${homeownershipRate ? ` With a ${homeownershipRate}% homeownership rate in ${cityName}, local crawl space mold contractors are experienced with owner-occupied homes and understand the health and structural concerns that motivate timely remediation.` : ""}`,
         `Floor joist damage is expensive. Mold-damaged floor joists become structurally compromised — requiring replacement that costs $5,000–$20,000+. Early crawl space mold removal prevents this outcome.`,
         `Crawl space mold affects home value and sale. Home inspectors always check crawl spaces. Visible mold can kill a sale or reduce sale price by $10,000–$30,000 more than the cost of remediation.`,
       ],
@@ -468,7 +488,7 @@ export function getCrawlSpaceMoldQuoteCityPageContent(
     faq: {
       h2: `Crawl Space Mold FAQ — ${cityName}`,
       items: [
-        { q: `How much does crawl space mold removal cost in ${cityName}?`, a: `Basic removal and treatment: $500–$2,000. With new vapor barrier: $1,500–$4,000. Full encapsulation: $3,000–$8,000. Homeowner insurance covers removal from covered plumbing events.` },
+        { q: `How much does crawl space mold removal cost in ${cityName}?`, a: `Basic removal and treatment: $500–$2,000. With new vapor barrier: $1,500–$4,000. Full encapsulation: $3,000–$8,000. Homeowner insurance covers removal from covered plumbing events.${medianHouseholdIncome ? ` In ${cityName}, where median household income is $${Number(medianHouseholdIncome).toLocaleString()}, most homeowners approach encapsulation as a long-term investment — a licensed contractor helps you choose the right scope for your budget and moisture situation.` : ""}` },
         { q: `Does crawl space mold affect indoor air quality in ${cityName}?`, a: `Yes. Stack effect draws up to 50% of first-floor air from the crawl space. Crawl space mold spores directly affect indoor air quality throughout the home.` },
         { q: `What is crawl space encapsulation in ${cityName}?`, a: `Encapsulation seals the crawl space with a heavy vapor barrier on the floor and walls, eliminating ground moisture vapor. Combined with a dehumidifier, it permanently controls humidity and prevents mold recurrence.` },
         { q: `Will crawl space mold come back in ${cityName}?`, a: `Without correcting the moisture source, yes. Encapsulation with a dehumidifier provides permanent moisture control — the most cost-effective long-term solution.` },
@@ -490,6 +510,8 @@ export function getMoldDamageRepairQuoteCityPageContent(
   nearby1: string, nearby2: string, nearby3: string,
   phone = PHONE, m?: CityMetadata | null
 ): ServiceCityContent {
+  const totalHousingUnits = m?.totalHousingUnits;
+  const medianGrossRent = m?.medianGrossRent;
   return {
     meta: {
       title: `Mold Damage Repair in ${cityName}, ${stateAbbr} | Rebuild After Mold | Free Quote`,
@@ -517,7 +539,9 @@ export function getMoldDamageRepairQuoteCityPageContent(
     mainService: {
       h2: `Mold Damage Repair in ${cityName}, ${stateAbbr}`,
       description: `Mold damage repair in ${cityName} includes: new drywall installation and finishing (mud, tape, prime, paint), new insulation installation to current R-value standards, framing repair or replacement for structural wood affected by mold, flooring replacement (subfloor, underlayment, and finish flooring), trim and millwork replacement, and final painting. All work is performed after IICRC clearance testing confirms the remediation is complete. A licensed ${cityName} contractor provides itemized documentation for your insurance claim — typically covered as part of the water damage or mold damage claim.`,
-      localParagraphs: [],
+      localParagraphs: [
+        medianGrossRent ? `In ${cityName}, where median rent is $${medianGrossRent.toLocaleString()}/month, rental property owners completing mold damage repair need licensed contractor documentation — repairs to rental units require permits, inspection records, and contractor invoices to satisfy both insurance adjusters and housing code compliance requirements.` : "",
+      ].filter(Boolean) as string[],
       cost: `Mold damage repair in ${cityName}: $500 – $30,000+`,
       whatAffects: ["Extent of material removal during remediation", "Structural framing damage requiring replacement", "Flooring type and area", "Finish quality — builder grade vs. premium"],
       cta: `Get a Mold Damage Repair Quote in ${cityName} — Call Now`,
@@ -533,7 +557,7 @@ export function getMoldDamageRepairQuoteCityPageContent(
     localSignals: {
       h2: `Mold Damage Repair Service Areas Near ${cityName}`,
       intro: `Licensed mold damage repair contractors in ${cityName} and nearby ${nearby1}, ${nearby2}, and ${nearby3}.`,
-      bullets: sigs(stateName, cityName, [`Licensed and insured contractors`, "Permit coordination included", "Insurance documentation for repair claims", `Serving ${cityName} and surrounding areas`], m),
+      bullets: sigs(stateName, cityName, [`Licensed and insured contractors`, "Permit coordination included", "Insurance documentation for repair claims", `Serving ${cityName} and surrounding areas`, ...(totalHousingUnits ? [`${cityName} has ${totalHousingUnits.toLocaleString()} housing units — local mold damage repair contractors serve this full market with restoration expertise and insurance documentation support.`] : [])], m),
     },
     eeat: { title: "Why trust this guide", bullets: EEAT },
     faq: {
